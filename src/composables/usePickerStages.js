@@ -1,32 +1,11 @@
-import { computed, defineAsyncComponent, ref } from 'vue';
-
-const STAGES = {
-    DATE: 'date',
-    TIME: 'time',
-}
-
+import { computed, ref } from 'vue';
+import { STAGES } from '../assets/constants/date-picker.js';
 
 export function usePickerStages() {
-    const components = {
-        [STAGES.DATE]: defineAsyncComponent(() => import('../components/picker-stages/PickerStageDate.vue')),
-        [STAGES.TIME]: defineAsyncComponent(() => import('../components/picker-stages/PickerStageTime.vue')),
-    }
-
     const allStages = [STAGES.DATE, STAGES.TIME];
     const currentStage = ref(STAGES.DATE);
     const currentStageIndex = computed(() => {
         return allStages.indexOf(currentStage.value);
-    });
-    const isFirstStage = computed(() => currentStageIndex.value === 0);
-    const isLastStage = computed(() => currentStageIndex.value === allStages.length - 1);
-    const currentStageComponent = computed(() => {
-        const component = components[currentStage.value];
-
-        if (!component) {
-            return null;
-        }
-
-        return component;
     });
 
     const nextStage = () => {
@@ -53,9 +32,6 @@ export function usePickerStages() {
 
     return {
         currentStage,
-        currentStageComponent,
-        isFirstStage,
-        isLastStage,
         nextStage,
         prevStage,
     }
