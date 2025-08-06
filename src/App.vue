@@ -41,7 +41,7 @@ const onNextStage = (datesList) => {
     max-width: 34rem;
     margin: 0 auto;
     padding: 1.5rem;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', sans-serif !important;
 }
 
 * {

@@ -1,12 +1,12 @@
 <script setup>
-import { useDatesPicker } from '../../composables/useDatesPicker.js';
 import { useTimePicker } from '../../composables/useTimePicker.js';
+import { Plus } from '@element-plus/icons-vue';
 
 const emit = defineEmits(['to-next-stage', 'to-prev-stage']);
 const { initDates = [] } = defineProps({
     initDates: Array,
 })
-const { timeMap, times, onTimeTagChange } = useTimePicker(initDates);
+const { timeMap, addTimeSlot } = useTimePicker(initDates);
 </script>
 
 <template>
@@ -25,16 +25,19 @@ const { timeMap, times, onTimeTagChange } = useTimePicker(initDates);
                 </el-tag>
 
                 <div class="minutes">
-                    <el-check-tag
-                        v-for="time in times"
-                        :key="`${date}_${time}`"
-                        :checked="selectedTimes.includes(time)"
-                        type="success"
-                        size="large"
-                        @change="val => onTimeTagChange(date, time, val)"
+                    <div
+                        v-for="(_, index) in selectedTimes"
+                        class="minutes__pick"
                     >
-                        {{ time }}
-                    </el-check-tag>
+                        <el-time-picker
+                            v-model="selectedTimes[index]"
+                            is-range
+                            format="H:mm"
+                            style="width: 100%"
+                        />
+                    </div>
+
+                    <el-button type="primary" :icon="Plus" style="width: 100%" @click="addTimeSlot(date)" />
                 </div>
             </div>
         </div>
@@ -69,6 +72,7 @@ const { timeMap, times, onTimeTagChange } = useTimePicker(initDates);
 
 .dates__row {
     display: flex;
+    flex-direction: column;
     gap: 2rem;
 }
 
@@ -76,6 +80,12 @@ const { timeMap, times, onTimeTagChange } = useTimePicker(initDates);
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+}
+
+.minutes__pick {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .buttons {

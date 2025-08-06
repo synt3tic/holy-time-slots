@@ -1,30 +1,23 @@
 import { useDatesPicker } from './useDatesPicker.js';
 import { ref } from 'vue';
-import { generateTimeArray } from '../assets/utils/date-utils.js';
 
 export function useTimePicker(initDates = []) {
     const { formattedDates } = useDatesPicker(initDates);
+    const getEmptyTimeRange = () => {
+        return [new Date(2025, 1, 1, 9, 0), new Date(2025, 1, 1, 21, 0)];
+    }
     const timeMap = ref(formattedDates.value.reduce((acc, date) => {
-        acc[date.formattedDate] = [];
+        acc[date.formattedDate] = [getEmptyTimeRange()];
 
         return acc;
     }, {}));
-    const times = generateTimeArray()
-    const onTimeTagChange = (date, time, value) => {
-        if (!timeMap.value[date]) {
-            return;
-        }
 
-        if (value) {
-            timeMap.value[date].push(time);
-        } else {
-            timeMap.value[date] = timeMap.value[date].filter(d => d !== time);
-        }
-    }
+    const addTimeSlot = (date) => {
+        timeMap.value[date].push(getEmptyTimeRange());
+    };
 
     return {
         timeMap,
-        times,
-        onTimeTagChange,
+        addTimeSlot,
     }
 }
