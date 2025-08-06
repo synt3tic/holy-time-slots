@@ -22,7 +22,6 @@ const onTagClose = (date) => {
         style="--el-date-editor-width: 100%;"
     />
 
-
     <div v-if="dates.length > 0" class="selected-dates">
         <el-text>Выбранные даты</el-text>
 
@@ -30,7 +29,6 @@ const onTagClose = (date) => {
             <el-tag
                 v-for="date in formattedDates"
                 :key="date.id"
-                disable-transition
                 closable
                 type="success"
                 size="large"

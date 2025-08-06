@@ -26,7 +26,11 @@ const onNextStage = (datesList) => {
         :init-dates="dates"
         @to-next-stage="onNextStage"
     />
-    <picker-stage-time v-if="currentStage === STAGES.TIME" @to-prev-stage="prevStage" />
+    <picker-stage-time
+        v-if="currentStage === STAGES.TIME"
+        :init-dates="dates"
+        @to-prev-stage="prevStage"
+    />
 </template>
 
 <style>
@@ -34,6 +38,8 @@ const onNextStage = (datesList) => {
     display: flex;
     flex-direction: column;
     height: 100dvh;
+    max-width: 34rem;
+    margin: 0 auto;
     padding: 1.5rem;
     font-family: 'Inter', sans-serif;
 }

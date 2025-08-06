@@ -9,7 +9,7 @@ export function useDatesPicker(initDates = []) {
             formattedDate: formatDate(date),
             date,
         }
-    }));
+    }).sort((a, b) => a.date - b.date));
 
     const removeDate = (date) => {
         dates.value = dates.value.filter(d => d !== date);
