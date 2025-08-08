@@ -1,23 +1,34 @@
 import { useDatesPicker } from './useDatesPicker.js';
-import { ref } from 'vue';
+import { getEmptyTimeRange } from '../assets/utils/date-utils.js';
+import { reactive, ref } from 'vue';
 
 export function useTimePicker(initDates = []) {
-    const { formattedDates } = useDatesPicker(initDates);
-    const getEmptyTimeRange = () => {
-        return [new Date(2025, 1, 1, 9, 0), new Date(2025, 1, 1, 21, 0)];
+    const timeMap = reactive(new Map());
+    setValuesToMap(initDates)
+
+    function setMap(dates) {
+        timeMap.clear();
+        setValuesToMap(dates);
     }
-    const timeMap = ref(formattedDates.value.reduce((acc, date) => {
-        acc[date.formattedDate] = [getEmptyTimeRange()];
 
-        return acc;
-    }, {}));
+    function setValuesToMap(dates) {
+        dates.forEach(date => {
+            timeMap.set(date, [getEmptyTimeRange()])
+        })
+    }
 
-    const addTimeSlot = (date) => {
-        timeMap.value[date].push(getEmptyTimeRange());
-    };
+    function addTimeSlot(date) {
+        if (!timeMap.has(date)) {
+            return;
+        }
+
+        const currentTimes = timeMap.get(date);
+        timeMap.set(date, [...currentTimes, getEmptyTimeRange()]);
+    }
 
     return {
         timeMap,
         addTimeSlot,
+        setMap,
     }
 }

@@ -2,7 +2,7 @@ import { computed, ref } from 'vue';
 import { STAGES } from '../assets/constants/date-picker.js';
 
 export function usePickerStages() {
-    const allStages = [STAGES.DATE, STAGES.TIME];
+    const allStages = [STAGES.DATE, STAGES.TIME, STAGES.RESULT];
     const currentStage = ref(STAGES.DATE);
     const currentStageIndex = computed(() => {
         return allStages.indexOf(currentStage.value);

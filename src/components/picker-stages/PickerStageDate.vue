@@ -44,7 +44,7 @@ const onTagClose = (date) => {
         size="large"
         type="success"
         style="--el-date-editor-width: 100%; margin-top: auto"
-        @click="emit('to-next-stage', dates)"
+        @click="emit('to-next-stage', 'dates', dates)"
     >
         Перейти к выбору времени
     </el-button>

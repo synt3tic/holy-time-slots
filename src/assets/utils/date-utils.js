@@ -6,3 +6,7 @@ export function formatDate(dateStr, locale = 'ru-RU', options = {
 
     return date.toLocaleDateString(locale, options);
 }
+
+export function getEmptyTimeRange() {
+    return [new Date(2025, 1, 1, 9, 0), new Date(2025, 1, 1, 21, 0)];
+}
